@@ -99,6 +99,47 @@
   </div>
 
 <script>
+
+  const items = document.querySelectorAll('.item input'); // could have done input[type="checkbox"]
+  var lastIndex;
+  var currentIndex;
+  var shifted = false;
+
+  function setLastSelected(e) {
+    if (e.target.checked === false) {return; }
+    lastIndex = currentIndex;
+    currentIndex = (Array.from(items)).findIndex(item => item === e.target);
+
+    if (lastIndex === currentIndex) {return; }
+
+    if (shifted) {
+      if (currentIndex > lastIndex) {
+        var workItems = (Array.from(items)).slice(lastIndex + 1, currentIndex);
+      } else {
+        var workItems = (Array.from(items)).slice(currentIndex + 1, lastIndex);
+      }
+
+      workItems.forEach(item => {item.checked = true});
+    }
+
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.keyCode === 16) {
+      shifted = true;
+      console.log(shifted);
+    }
+  });
+  document.addEventListener('keyup', function(e) {
+    if (e.keyCode === 16) {
+      shifted = false;
+    }
+  });
+
+  items.forEach(item => {
+    item.addEventListener('click', setLastSelected)
+  });
 </script>
+
 </body>
 </html>
