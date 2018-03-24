@@ -43,6 +43,7 @@
   </div>
 
   <script>
+  // debounce limits the times something is run
     function debounce(func, wait = 20, immediate = true) {
       var timeout;
       return function() {
@@ -57,6 +58,30 @@
         if (callNow) func.apply(context, args);
       };
     }
+
+    function checkSlide(e) {
+      // console.log(window.scrollY);
+      sliderImages.forEach((sliderImage) => {
+        // halfway though image
+        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+        // bottom of imagae
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+        const isHalfShown = slideInAt > sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+
+        if (isHalfShown && isNotScrolledPast) {
+          sliderImage.classList.add('active');
+        } else {
+          sliderImage.classList.remove('active');
+        }
+      });
+    }
+
+    const sliderImages = document.querySelectorAll('.slide-in');
+
+
+
+    window.addEventListener('scroll', debounce(checkSlide, 18))
 
   </script>
 
