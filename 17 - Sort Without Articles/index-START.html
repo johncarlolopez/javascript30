@@ -46,6 +46,47 @@
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+// const articles = [
+//   new RegExp('the ', 'gi'),
+//   new RegExp('an ', 'gi'),
+//   new RegExp('a ', 'gi'),
+// ];
+//
+const bandListEle = document.querySelector('#bands');
+//
+// function removeArticles(band) {
+//   articles.forEach((article) => {
+//     if (article.test(band)) {
+//       band = band.replace(article, '');
+//     }
+//   });
+//   return band
+// }
+//
+// function populateList(bands = [], bandListEle) {
+//   bandListEle.innerHTML = bands.map(band => {
+//     return `
+//       <li>
+//         ${band}
+//       </li>
+//     `
+//   }).join('');
+// }
+//
+// orderedBands = (bands.map(removeArticles)).sort();
+//
+// populateList(orderedBands, bandListEle);
+
+function strip(bandName) {
+  return bandName.replace(/^(a |the |an )/i, '').trim();
+}
+
+const sortedBands = bands.sort((a, b) => strip(a) > strip(b) ? 1 : -1);
+
+bandListEle.innerHTML =
+  sortedBands
+    .map(band => `<li>${band}</li>`)
+    .join('');
 
 </script>
 
